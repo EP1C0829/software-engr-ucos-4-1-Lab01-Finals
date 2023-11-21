@@ -30,6 +30,19 @@ class AddProduct {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    
+    public static void displayFormat()   
+    {  
+        System.out.format("-----------------------------------------------------------------------");  
+        System.out.print("\nName\t\tQuantity\t\tPrice\t\tTotal Price\n");  
+        System.out.format("-----------------------------------------------------------------------\n");  
+    } 
+    
+    public void display()   
+    {  
+        System.out.format("%-9s      %5d                %9.2f     %14.2f\n" ,name, quantity, price, getPrice() * getQuantity());  
+    }  
+    
 }
 
 public class POS {
@@ -180,27 +193,25 @@ public class POS {
                 productNumber++;
             }
         }
+    	
+    	
     }
 
     private static void checkOutCart(List<AddProduct> cart) {
         if (cart.isEmpty()) {
             System.out.println("Cart is empty. Nothing to check out.");
         } else {
+        	AddProduct.displayFormat();
             double totalAmount = 0;
-            System.out.println("-------- CHECKOUT --------");
             int productNumber = 1;
             for (AddProduct product : cart) {
-                System.out.println("Product " + productNumber);
-                System.out.println("Name: " + product.getName());
-                System.out.println("Price: ₱" + product.getPrice());
-                System.out.println("Quantity: " + product.getQuantity());
                 double productTotal = product.getPrice() * product.getQuantity();
-                System.out.println("Total: ₱" + productTotal);
-                System.out.println("--------------------------");
                 totalAmount += productTotal;
                 productNumber++;
+                product.display();
             }
-            System.out.println("Total Amount: ₱" + totalAmount);
+            System.out.format("-----------------------------------------------------------------------");  
+            System.out.println("\nTotal Amount: ₱" + totalAmount);
             cart.clear();
             System.out.println("Cart cleared. Thank you for your purchase!");
         }
